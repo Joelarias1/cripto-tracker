@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from pycoingecko import CoinGeckoAPI
 import requests
@@ -10,15 +11,18 @@ def welcome(request):
     topcoins = get_top_coins()
     trending = get_trending_coins()
     exchgvolume = get_exchanges()
-    return render(request, "cointracker/welcome.html", {"coins":topcoins, "trending":trending, "exchange":exchgvolume})
+    ath = get_top_coins_with_ath()
+    return render(request, "cointracker/welcome.html", {"coins":topcoins, "trending":trending, "exchange":exchgvolume, "ath":ath})
 
 
 def get_top_coins():
     cg = CoinGeckoAPI()
-    coins = cg.get_coins_markets(vs_currency='usd', order='market_cap_desc', per_page=10, page=1, sparkline=False)
+    coins = cg.get_coins_markets(vs_currency='usd', order='market_cap_desc', per_page=15, page=1, sparkline=False)
     for coin in coins:
         coin['current_price'] = '${:,.2f}'.format(coin['current_price'])
-        coin['market_cap'] = '${:,.2f}'.format(coin['market_cap'])
+        coin['market_cap'] = '${:,.0f}'.format(coin['market_cap'])
+        coin['high_24h'] = '${:,.2f}'.format(coin['high_24h'])
+        coin['low_24h'] = '${:,.2f}'.format(coin['low_24h'])
     return coins
 
 
@@ -46,3 +50,18 @@ def get_exchanges():
     return exchanges
   else:
     return []
+
+
+def get_top_coins_with_ath():
+    cg = CoinGeckoAPI()
+    coins = cg.get_coins_markets(vs_currency='usd', order='market_cap_desc', per_page=30, page=1, sparkline=False)
+    for coin in coins:
+        coin['current_price'] = '${:,.2f}'.format(coin['current_price'])
+        coin['ath'] = '${:,.2f}'.format(coin['ath'])
+        coin['ath_change_percentage'] = '{:,.2f}%'.format(coin['ath_change_percentage'])
+    return coins
+
+def coin_detail(request, coin_id):
+    cg = CoinGeckoAPI()
+    coin_data = cg.get_coin_by_id(coin_id)
+    return render(request, 'cointracker/coin-detail.html', {'coin': coin_data})
