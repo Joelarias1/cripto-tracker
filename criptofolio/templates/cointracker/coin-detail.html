@@ -13,10 +13,60 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
   <script src="{% static 'js/scripts.js' %}"></script>
 
-  <title>CriptoFolio - Coin Details</title>
+  <title>CoinDetail -{{ coin.name }} </title>
 </head>
 
 <body>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-4">
+      <img src="{{ coin.image.large }}" width="128" height="128" />
+    </div>
+    <div class="col-8">
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <th scope="row">Nombre</th>
+            <td>{{ coin.name }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Simbolo</th>
+            <td>{{ coin.symbol }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Precio actual</th>
+            <td>{{ current_price }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Capitalización</th>
+            <td>{{ market_cap }}</td>
+          </tr>
+          <!-- Agrega más filas para mostrar más datos de la moneda -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<div class="container d-flex justify-content-between">
+  <div class="row">
+    <form method="POST" action="{% url 'coin_detail' coin.id %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="tokenAmount">Cantidad de tokens:</label>
+        <input type="text" class="form-control" id="tokenAmount" name="token_amount">
+      </div>
+      <button type="submit" class="btn btn-primary">Calcular</button>
+    </form>
+    {% if usd_amount %}
+  <div class="form-group mt-3">
+    <label for="usdAmount">Valor en USD:</label>
+    <input type="text" class="form-control" id="usdAmount" value="{{ usd_amount }}" disabled>
+  </div>
+  {% endif %}
+    
+</div>
+
 
 </body>
 
@@ -26,33 +76,3 @@
 
 
 
-<!-- <div class="container mt-4">
-<h2>Detalles de la moneda</h2>
-<div class="row">
-  <div class="col-4">
-    <img src="{{ coin.image.small }}" width="128" height="128" />
-  </div>
-  <div class="col-8">
-    <table class="table table-borderless">
-      <tbody>
-        <tr>
-          <th scope="row">Nombre</th>
-          <td>{{ coin.name }}</td>
-        </tr>
-        <tr>
-          <th scope="row">Simbolo</th>
-          <td>{{ coin.symbol }}</td>
-        </tr>
-        <tr>
-          <th scope="row">Precio actual</th>
-          <td>{{ coin.current_price }} USD</td>
-        </tr>
-        <tr>
-          <th scope="row">Capitalización</th>
-          <td>{{ coin.market_cap }} USD</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-</div> -->

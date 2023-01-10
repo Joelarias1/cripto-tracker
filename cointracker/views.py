@@ -35,16 +35,13 @@ def get_trending_coins():
 
 
 def get_exchanges():
-  # Hacer la llamada a la API
   response = requests.get("https://api.coingecko.com/api/v3/exchanges?per_page=10&page=1")
 
   if response.status_code == 200:
     data = response.json()
     exchanges = []
 
-    # Iterar a través de cada exchange en la lista de exchanges
     for exchange in data:
-      # Agregar el exchange a la lista
       exchanges.append(exchange)
 
     return exchanges
@@ -61,7 +58,38 @@ def get_top_coins_with_ath():
         coin['ath_change_percentage'] = '{:,.2f}%'.format(coin['ath_change_percentage'])
     return coins
 
+
+
 def coin_detail(request, coin_id):
     cg = CoinGeckoAPI()
     coin_data = cg.get_coin_by_id(coin_id)
-    return render(request, 'cointracker/coin-detail.html', {'coin': coin_data})
+
+    current_price = float(coin_data['market_data']['current_price']['usd'])
+
+    if current_price >= 0.001:
+        current_price = '${:,.2f}'.format(current_price)
+    else:
+        current_price = '${:,.10f}'.format(current_price)
+
+    market_cap = '${:,.0f}'.format(coin_data['market_data']['market_cap']['usd'])
+    
+    if request.method == 'POST':
+        # Si el usuario ha enviado una cantidad de tokens, se calcula el valor en USD de la cantidad ingresada
+        current_price = current_price.replace('$', '').replace(',', '')
+        token_amount = float(request.POST['token_amount'])
+        usd_amount = token_amount * float(current_price)
+        usd_amount = '${:,.2f}'.format(usd_amount)
+    else:
+        # Si el usuario no ha enviado una cantidad de tokens, simplemente muestras el precio actual del token
+        usd_amount = current_price
+
+    return render(request, 'cointracker/coin-detail.html', {'coin': coin_data, 'current_price': current_price, 'market_cap': market_cap, 'usd_amount': usd_amount})
+
+
+
+
+
+
+
+  
+  

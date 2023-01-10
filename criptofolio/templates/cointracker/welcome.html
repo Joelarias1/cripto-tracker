@@ -166,12 +166,16 @@
               {% for coin in coins %}
               <tr>
                 <td class="text-center align-middle">
-                  <img src="{{ coin.image }}" width="32" height="32" />
+                  <a href="{% url 'coin_detail' coin.id %}">
+                    <img src="{{ coin.image }}" width="32" height="32"/>
+                  </a>
                 </td>
                 <td class="text-center align-middle fw-bold text-uppercase">
-                  {{ coin.symbol }}
+                  <a href="{% url 'coin_detail' coin.id %}">
+                    {{ coin.symbol }}
+                  </a>
                 </td>
-                <td class="text-center align-middle text-capitalize">
+                <td class="text-center align-middle textz-capitalize">
                   <a href="{% url 'coin_detail' coin.id %}">{{ coin.name }}</a>
                 </td>
                 <td class="text-center align-middle">
@@ -181,10 +185,10 @@
                   {{ coin.market_cap }} USD
                 </td>
                 <td class="text-center align-middle">
-                  {{ coin.high_24h }} USD
+                  {{ coin.high_24h }} 
                 </td>
                 <td class="text-center align-middle">
-                  {{ coin.low_24h }} USD
+                  {{ coin.low_24h }} 
                 </td>
               </tr>
               {% endfor %}
