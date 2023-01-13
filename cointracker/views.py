@@ -23,8 +23,6 @@ def get_top_coins():
         coin['low_24h'] = '${:,.2f}'.format(coin['low_24h'])
     return coins
 
-
-
 #Cards de HTML
 def get_trending_coins():
     cg = CoinGeckoAPI()
@@ -58,10 +56,14 @@ def get_top_coins_with_ath():
 
 
 
+
+#Funciones Vista Coin-Detail:
+
 def coin_detail(request, coin_id):
     cg = CoinGeckoAPI()
     coin_data = cg.get_coin_by_id(coin_id)
     graph_div = graph30days(coin_id)
+    tickers = get_exchanges_by_coin_id(coin_id)
 
     current_price = float(coin_data['market_data']['current_price']['usd'])
 
@@ -82,23 +84,41 @@ def coin_detail(request, coin_id):
         # Si el usuario no ha enviado una cantidad de tokens, se muestra el valor actual
         usd_amount = current_price
 
-    return render(request, 'cointracker/coin-detail.html', {'coin': coin_data, 'current_price': current_price, 'market_cap': market_cap, 'usd_amount': usd_amount, 'graph_div': graph_div})
+    return render(request, 'cointracker/coin-detail.html', {'coin': coin_data, 'current_price': current_price, 'market_cap': market_cap, 'usd_amount': usd_amount, 'graph_div': graph_div, 'tickers': tickers})
 
 
+
+#Listado de exchanges que venden la moneda
+
+def get_exchanges_by_coin_id(coin_id):
+    cg = CoinGeckoAPI()
+    ticker = cg.get_coin_ticker_by_id(coin_id, order='trust_score_desc, volume_desc', include_exchange_logo=True, depth=True)
+    
+    for data in ticker["tickers"]:
+        data["volume"] = "${:,.0f}".format(data["volume"])
+        if data["last"] < 0.001:
+            data['last'] = "${:,.10f}".format(data["last"])
+        else:
+            data['last'] = "${:,.2f}".format(data["last"])
+    return ticker
+
+
+
+
+
+
+
+#Grafico
 
 def graph30days(coin_id):
     cg = CoinGeckoAPI()
-
-    # Obtener los datos históricos de la moneda
     coin_history = cg.get_coin_market_chart_by_id(coin_id, vs_currency='usd', days='30', interval='daily')
-
-    # Extraer los precios máximos para cada día
     max_prices = [data[1] for data in coin_history['prices']]
 
     # Crear el gráfico de línea utilizando Plotly
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=list(range(1,31)), y=max_prices, name='Max Price',mode='lines+markers'))
-    fig.update_layout(title='Price History (Last 30 Days)', xaxis_title='Days', yaxis_title='Price (USD)',showlegend=True)
+    fig.update_layout(title='Price History (Last 30 Days)', xaxis_title='Days', yaxis_title='Price (USD)',showlegend=False)
 
     # Crear una cadena que contenga los datos del gráfico en formato HTML
     graph_div = fig.to_html(full_html=False, config={"modeBarButtonsToRemove": ['toImage', 'zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d']})

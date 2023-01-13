@@ -67,10 +67,61 @@
   {% endif %}
   </div>
 
-  
-  <div class="col-12">
-    <div id="graph-div" style="width: 1000px; height: 500px;">{{ graph_div|safe }}</div>
+  <div class="row">
+    <div class="col-6">
+      <div id="graph-div" style="width: 1000px; height: 500px;">{{ graph_div|safe }}</div>
+    </div>
   </div>
+
+<div class="row">
+  <div class="col-12">
+    <table class="table table-borderless">
+      <tbody>
+        <tr>
+          <th scope="row">Porcentaje de cambio en las ultimas 24h</th>
+          <td>{{ coin.market_data.price_change_percentage_24h }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Porcentaje de cambio en las ultimas 7d</th>
+          <td>{{ coin.market_data.price_change_percentage_7d }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Porcentaje de cambio en las ultimos 30d</th>
+          <td>{{ coin.market_data.price_change_percentage_30d }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Porcentaje de cambio de 1 año</th>
+          <td>{{ coin.market_data.price_change_percentage_1y }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+      <tr>
+          <th>Logo</th>
+          <th>Exchange</th>
+          <th>Par</th>
+          <th>Precio</th>
+          <th>Volumen</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for ticker in tickers.tickers %}
+      <tr>
+          <td><img src="{{ ticker.market.logo }}" width="32" height="32" /></td>
+          <td>{{ ticker.market.name }}</td>
+          <td>{{ ticker.base }}/{{ ticker.target }}</td>
+          <td>{{ ticker.last }}</td>
+          <td>{{ ticker.volume }}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+
 
   
 
