@@ -7,12 +7,21 @@ import plotly.graph_objects as go
 
 def welcome(request):
     cg = CoinGeckoAPI()
-    exchanges = cg.get_exchanges_list()
-    exchange_count = len(exchanges)
+    #Exchange Count
+    url = 'https://api.coingecko.com/api/v3/exchanges'
+    response = requests.get(url)
+    total_exchanges = response.headers
+        
+    #DeFi
     defi_marketcap = cg.get_global_decentralized_finance_defi()
     marketcap = float(defi_marketcap["defi_market_cap"])
     formatted_marketcap = "${:,.0f}".format(marketcap)
-    context = {'marketcap': formatted_marketcap, 'exchange': exchange_count}
+    
+    #CryptoCount
+    crypto_count = cg.get_global()
+
+    #Return
+    context = {'marketcap': formatted_marketcap, 'exchange': total_exchanges, 'crypto_count': crypto_count}
     return render(request, "cointracker/welcome.html", context)
 
 

@@ -1,10 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,800&family=Rowdies&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@100&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&family=Raleway:ital,wght@1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400;1,600;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400;1,600;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap');
 
 :root {
+
+  margin:0; 
+  padding:0;
+
   --bg-color: #1e2324;
   --nav-text-color: #fcc780;
   --nav-text-color-fade: #c59b65;
@@ -17,6 +20,12 @@
 }
 
 
+/* Properties */
+
+.border-gold{
+  border-top: 20px solid var(--nav-text-color);
+}
+
 /* Navbar */
 
 .bg-nav{
@@ -26,8 +35,9 @@
 }
 
 .logo-tittle{
+  font-size: 30px;
   color: var(--nav-text-color);
-  font-family: 'Rowdies', cursive;
+  font-family: 'La Belle Aurore', cursive;
   letter-spacing: 3px;
   text-shadow: 3px 3px 5px var(--shadow-text);
 
@@ -36,6 +46,16 @@
 .logo-tittle:hover{
   text-shadow: 1px 1px 5px var(--nav-text-color);
   transform: scale(1.05);
+}
+
+.img-logo{
+  box-sizing: border-box;
+  -webkit-filter: 
+    drop-shadow(2px 1px 0 var(--nav-text-color))
+    drop-shadow(-1px -1px 0 var(--nav-text-color));
+  filter: 
+    drop-shadow(2px 1px 0 var(--nav-text-color)) 
+    drop-shadow(-1px -1px 0 var(--nav-text-color));
 }
 
 
@@ -49,17 +69,15 @@
 
 .nav-link:hover{
   color: var(--nav-text-color);
-  transform: scale(1.2);
-  text-shadow: 1px 1px 5px var(--nav-text-color);
+  text-shadow: 1px 1px 8px var(--nav-text-color);
 }
 
 .btn-search{
   font-family: 'Dosis', sans-serif;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.3px;
   font-weight: bold;
   background-color: var(--nav-text-color);
   color: var(--bg-color);
-  width: 40%;
   box-shadow: 1px 1px 5px var(--shadow-text);
 }
 
@@ -94,17 +112,17 @@
 }
 
 .text-header{
+  font-size: 4vw;
   font-family: 'Raleway', sans-serif;
-  font-size: 100px;
   color: var(--nav-text-color);
-  text-shadow: 10px 10px 0px var(--shadow-text);
+  text-shadow: 6px 6px 0px var(--shadow-text);
 
 }
 
 .text-information{
   font-family: 'Dosis', sans-serif;
   color: var(--nav-text-color-fade);
-  font-size: 35px;
+  font-size: 3vw;
   text-shadow: 2px 2px 1px var(--shadow-text);
 }
 
@@ -113,31 +131,22 @@
   color: var(--nav-text-color-fade);
   font-size: 20px;
   font-weight: bolder;
-
 }
 
-.shadow-img-circle {
-  max-width: 900px;
-  max-height: 900px;
+.big-img-circle {
   border-radius: 50%;
+  object-fit: cover;
   box-sizing: border-box;
-  -webkit-filter: 
-    drop-shadow(1px 1px 0 var(--nav-text-color))
-    drop-shadow(-1px -1px 0 var(--nav-text-color));
-  filter: 
-    drop-shadow(1px 1px 0 var(--nav-text-color)) 
-    drop-shadow(-1px -1px 0 var(--nav-text-color));
-
- 
-}
-
-.shadow-img-circle:hover {
-  transform: scale(1.02);
   filter:drop-shadow(0px 0px 20px var(--nav-text-color));
 }
 
- 
 
+.big-img-circle:hover {
+  transform: scale(1.02);
+}
+
+
+ 
 .btn-information{
   font-family: 'Dosis', sans-serif;
   letter-spacing: 1.5px;
@@ -146,6 +155,7 @@
   color: var(--bg-color);
   width: 40%;
   box-shadow: 1px 1px 5px var(--shadow-text );
+  background-color: var(--nav-text-color-fade);
 }
 
 .btn-information:hover{
@@ -153,16 +163,60 @@
   transform: scale(1.04);
 }
 
-
-/* Information of Coins  */
+/* Cards  */
 
 .bg-information{
   background-color: var(--bg-color2);
 }
 
-.coin-icon{
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
+.card-subtitle{
+  font-size: 25px;
+  font-weight: bold;
 }
 
+.card-title{
+  font-size: 100px;
+}
+
+.card-img-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-img-container img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+
+/* Media Queries */
+
+
+@media (max-width: 767px) {
+  .big-img-circle {
+    display: block;
+    margin: 0 auto;
+  }
+  .text-header {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 4rem;
+  }
+  .text-information {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 2rem;
+  }
+  .btn-information {
+    display: block;
+    margin: 0 auto;
+    margin-top: 1rem;
+    width: 30rem;
+  }
+}

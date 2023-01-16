@@ -6,10 +6,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/esm/popper.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
   <script src="{% static 'js/scripts.js' %}"></script>
 
@@ -19,96 +16,114 @@
 <body>
   <nav class="navbar navbar-expand-lg sticky-top bg-nav">
     <div class="container-fluid">
-      <a class="navbar-brand ms-5 d-flex align-items-center" href="#">
-        <img src="{% static 'img/logo.png' %}" alt="Logo Crypto" width="65" height="65"
-          class="d-inline-block align-text-top">
+      <a class="navbar-brand ml-auto d-flex align-items-center" href="#">
+        <img src="{% static 'img/logo.png' %}" alt="Logo Crypto" width="65" height="65" class="d-inline-block align-text-top img-logo">
         <span class="ms-3">
-          <h4 class="logo-tittle">CryptoTracker</h4>
+          <h4 class="logo-tittle my-2">CryptoTracker</h4>
         </span>
       </a>
-
-      <div class="ms-auto">
-        <ul class="navbar-nav me-5">
-          <li class="nav-item mx-5">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item mx-4">
             <a class="nav-link" href="#">Home</a>
           </li>
-          <li class="nav-item mx-5">
-            <a class="nav-link" href="#">About</a>
+          <li class="nav-item mx-4">
+            <a class="nav-link" href="#">Cryptos</a>
           </li>
-          <li class="nav-item mx-5">
-            <a class="nav-link" href="#">Crypto List</a>
-          </li>
-          <li class="nav-item mx-5">
+          <li class="nav-item mx-4">
             <a class="nav-link" href="#">Exchanges</a>
           </li>
+          <li class="nav-item mx-4">
+            <a class="nav-link" href="#">DeFi</a>
+          </li>
         </ul>
+        <form class="d-flex form-inline my-2 my-lg-0 mx-2" role="search">
+          <input class="form-control ml-auto" type="search" placeholder="Search" aria-label="Search" id="input-search">
+          <button class="btn btn-search ml-auto ms-2 d-flex" type="submit">Search</button>
+        </form>
       </div>
-      <form class="d-flex me-4" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="input-search">
-        <button class="btn btn-search" type="submit">Search</button>
-      </form>
+    </div>
   </nav>
+  
 
   <div class="container-fluid">
     <div class="row bg-header">
-      <div class="col-6 text-center text-display">
-        <div class="big-text text-start ms-5 mb-5">
+      <div class="col-xl-6 col-lg-6 col-md-6 text-center text-display">
+        <div class="big-text text-start ml-auto mx-auto">
           <h1 class="text-header">
             CRYPTOCURRENCY TRACKER
           </h1>
           <h3 class="text-information mb-5">
             Welcome to CryptoTracker, the ultimate destination for all your cryptocurrency price tracking needs.
           </h3>
-          <button class="btn btn-information btn-lg mx-auto mt-5">Go to market</button>
+          <div class="d-flex align-items-center">
+            <button class="btn btn-information ml-auto">Go to market</button>
+          </div>
+
         </div>
 
       </div>
-      <div class="col-6 img-container">
-        <img src="{% static 'img/logo.png' %}" class="img-fluid ms-5 shadow-img-circle" alt="`Logo Sitio CryptoTracker">
+      <div class="col-xl-6 col-lg-6 col-md-6">
+        <img src="{% static 'img/logo.png' %}" class="img-fluid big-img-circle" alt="`Logo Sitio CryptoTracker">
       </div>
     </div>
 
-    <div class="row bg-information pt-5">
-      <div class="col-4 mb-4">
-        <div class="card mx-4">
-          <div class="card-body text-center">
-            <h5 class="card-title">Titulo tarjeta 1</h5>
-            <div class="card-body">
-              <div>
-                <p>Cantidad de Exchanges: {{ exchange_count }}</p>
-              </div>
-            </div>
+    <!-- <div class="row bg-information py-5">
+      <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+        <div class="card mx-4 p-2 rounded card-shadow d-flex border-gold">
+          <div class="card-body text-start">
+            <h1 class="card-title d-flex align-items-center">500 <i class="fa-solid fa-circle-up ms-3"
+                style="font-size: 40px;"></i></h1>
+            <h5 class="card-subtitle">Supported Exchanges</h5>
+          </div>
+          <div class="card-img-container">
+            <img src="{% static 'img/cat-in-pc.png' %}" alt="Cat-in-pc-logo">
+          </div>
 
-          </div>
         </div>
-      </div>
-      <div class="col-4 mb-4">
-        <div class="card mx-4 rounded card-shadow">
-          <div class="card-body text-center">
-            <h5 class="card-title">Titulo tarjeta 2</h5>
-            <div class="card-body">
-              <div>
-                <p>Marketcap Defi: {{ marketcap }} USD</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-4 mb-4">
-        <div class="card mx-4">
-          <div class="card-body text-center">
-            <h5 class="card-title">Titulo tarjeta 3</h5>
-            <div class="card-body">
-              <div>
-                <p>Cantidad de Exchanges: {{ exchange_count }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-  </div>
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+        <div class="card mx-4 p-2 rounded card-shadow d-flex border-gold">
+          <div class="card-body text-start">
+            <h1 class="card-title d-flex align-items-center">{{crypto_count.active_cryptocurrencies}}<i
+                class="fa-brands fa-bitcoin ms-3" style="font-size: 40px;"></i></h1>
+            <h5 class="card-subtitle">Active Cryptocurrencies</h5>
+          </div>
+          <div class="card-img-container">
+            <img src="{% static 'img/cat-holding-glass.png' %}" alt="Cat-in-pc-logo">
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+        <div class="card mx-4 p-2 rounded card-shadow d-flex border-gold">
+          <div class="card-body text-start">
+            <h1 class="card-title d-flex align-items-center">{{crypto_count.markets}} <i
+                class="fa-solid fa-money-bill-transfer ms-3 " style="font-size: 40px;"></i></h1>
+            <h5 class="card-subtitle">Supported Markets</h5>
+          </div>
+          <div class="card-img-container">
+            <img src="{% static 'img/cat-with-dolar.png' %}" alt="Cat-in-pc-logo" class="cat-pc-logo">
+          </div>
+
+        </div>
+      </div>
+
+
+    </div> -->
+
+
+  </div> 
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/esm/popper.min.js"></script>
+  <script src="https://kit.fontawesome.com/618b0502f2.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
