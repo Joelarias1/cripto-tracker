@@ -5,24 +5,27 @@ import requests
 import plotly.graph_objects as go
 
 
-def welcome(request):
-    cg = CoinGeckoAPI()
-    #Exchange Count
-    url = 'https://api.coingecko.com/api/v3/exchanges'
-    response = requests.get(url)
-    total_exchanges = response.headers
+# def welcome(request):
+#     cg = CoinGeckoAPI()
+#     #Exchange Count
+#     url = 'https://api.coingecko.com/api/v3/exchanges'
+#     response = requests.get(url)
+#     total_exchanges = response.headers
         
-    #DeFi
-    defi_marketcap = cg.get_global_decentralized_finance_defi()
-    marketcap = float(defi_marketcap["defi_market_cap"])
-    formatted_marketcap = "${:,.0f}".format(marketcap)
+#     #DeFi
+#     defi_marketcap = cg.get_global_decentralized_finance_defi()
+#     marketcap = float(defi_marketcap["defi_market_cap"])
+#     formatted_marketcap = "${:,.0f}".format(marketcap)
     
-    #CryptoCount
-    crypto_count = cg.get_global()
+#     #CryptoCount
+#     crypto_count = cg.get_global()
 
-    #Return
-    context = {'marketcap': formatted_marketcap, 'exchange': total_exchanges, 'crypto_count': crypto_count}
-    return render(request, "cointracker/welcome.html", context)
+#     #Return
+#     context = {'marketcap': formatted_marketcap, 'exchange': total_exchanges, 'crypto_count': crypto_count}
+#     return render(request, "cointracker/welcome.html", context)
+
+def welcome(request):
+    return render(request, "cointracker/welcome.html")
 
 
 def get_top_coins():
