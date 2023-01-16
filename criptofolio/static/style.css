@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,800&family=Rowdies&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+
+:root {
+  --bg-color: #1e2324;
+  --nav-text-color: #fcc780;
+  --nav-text-color-fade: #c59b65;
+  --bg-color2: #2f3535;
+  --shadow-text:#101414;
+  --nav-color: #b8c9cb;
+  --white-cloud: #fefdea;
+  --sky-color: #b9c9ca;
+  --sky-faded: #576064;
+}
+
+
+/* Navbar */
+
+.bg-nav{
+  background-color: var(--bg-color2);
+  box-shadow: 0px 0px 25px 1px var(--shadow-text);
+  border-bottom: 2px solid var(--nav-text-color);
+}
+
+.logo-tittle{
+  color: var(--nav-text-color);
+  font-family: 'Rowdies', cursive;
+  letter-spacing: 3px;
+  text-shadow: 3px 3px 5px var(--shadow-text);
+
+}
+
+.logo-tittle:hover{
+  text-shadow: 1px 1px 5px var(--nav-text-color);
+  transform: scale(1.05);
+}
+
+
+.nav-link{
+  color: var(--nav-text-color-fade);
+  font-family: 'Dosis', sans-serif;
+  letter-spacing: 2px;
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.nav-link:hover{
+  color: var(--nav-text-color);
+  transform: scale(1.2);
+  text-shadow: 1px 1px 5px var(--nav-text-color);
+}
+
+.btn-search{
+  font-family: 'Dosis', sans-serif;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+  background-color: var(--nav-text-color);
+  color: var(--bg-color);
+  width: 40%;
+  box-shadow: 1px 1px 5px var(--shadow-text);
+}
+
+.btn-search:hover{
+  background-color: var(--nav-text-color-fade);
+  transform: scale(1.04);
+}
+
+#input-search{
+  outline: none;
+  border: 2px solid var(--nav-text-color);
+}
+
+.form-control:focus {
+  border-color: var(--nav-text-color);
+  box-shadow: inset 0px 0px 5px var(--nav-text-color-fade);
+}
+
+
+
+/* Texto e imagen */
+
+.bg-header{
+  background-color: var(--bg-color);
+}
+
+
+.text-display{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-header{
+  font-family: 'Raleway', sans-serif;
+  font-size: 100px;
+  color: var(--nav-text-color);
+  text-shadow: 10px 10px 0px var(--shadow-text);
+
+}
+
+.text-information{
+  font-family: 'Dosis', sans-serif;
+  color: var(--nav-text-color-fade);
+  font-size: 35px;
+  text-shadow: 2px 2px 1px var(--shadow-text);
+}
+
+.text-description{
+  font-family: 'Libre Franklin', sans-serif;
+  color: var(--nav-text-color-fade);
+  font-size: 20px;
+  font-weight: bolder;
+
+}
+
+.shadow-img-circle {
+  max-width: 900px;
+  max-height: 900px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  -webkit-filter: 
+    drop-shadow(1px 1px 0 var(--nav-text-color))
+    drop-shadow(-1px -1px 0 var(--nav-text-color));
+  filter: 
+    drop-shadow(1px 1px 0 var(--nav-text-color)) 
+    drop-shadow(-1px -1px 0 var(--nav-text-color));
+
+ 
+}
+
+.shadow-img-circle:hover {
+  transform: scale(1.02);
+  filter:drop-shadow(0px 0px 20px var(--nav-text-color));
+}
+
+ 
+
+.btn-information{
+  font-family: 'Dosis', sans-serif;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+  background-color: var(--nav-text-color);
+  color: var(--bg-color);
+  width: 40%;
+  box-shadow: 1px 1px 5px var(--shadow-text );
+}
+
+.btn-information:hover{
+  background-color: var(--nav-text-color-fade);
+  transform: scale(1.04);
+}
+
+
+/* Information of Coins  */
+
+.bg-information{
+  background-color: var(--bg-color2);
+}
+
+.coin-icon{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+

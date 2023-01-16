@@ -6,11 +6,14 @@ import plotly.graph_objects as go
 
 
 def welcome(request):
-    topcoins = get_top_coins()
-    trending = get_trending_coins()
-    exchgvolume = get_exchanges()
-    ath = get_top_coins_with_ath()
-    return render(request, "cointracker/welcome.html", {"coins":topcoins, "trending":trending, "exchange":exchgvolume, "ath":ath})
+    cg = CoinGeckoAPI()
+    exchanges = cg.get_exchanges_list()
+    exchange_count = len(exchanges)
+    defi_marketcap = cg.get_global_decentralized_finance_defi()
+    marketcap = float(defi_marketcap["defi_market_cap"])
+    formatted_marketcap = "${:,.0f}".format(marketcap)
+    context = {'marketcap': formatted_marketcap, 'exchange': exchange_count}
+    return render(request, "cointracker/welcome.html", context)
 
 
 def get_top_coins():
@@ -57,8 +60,9 @@ def get_top_coins_with_ath():
 
 
 
-#Funciones Vista Coin-Detail:
 
+
+#Funciones Vista Coin-Detail:
 def coin_detail(request, coin_id):
     cg = CoinGeckoAPI()
     coin_data = cg.get_coin_by_id(coin_id)
@@ -89,7 +93,6 @@ def coin_detail(request, coin_id):
 
 
 #Listado de exchanges que venden la moneda
-
 def get_exchanges_by_coin_id(coin_id):
     cg = CoinGeckoAPI()
     ticker = cg.get_coin_ticker_by_id(coin_id, order='trust_score_desc, volume_desc', include_exchange_logo=True, depth=True)
@@ -103,13 +106,7 @@ def get_exchanges_by_coin_id(coin_id):
     return ticker
 
 
-
-
-
-
-
 #Grafico
-
 def graph30days(coin_id):
     cg = CoinGeckoAPI()
     coin_history = cg.get_coin_market_chart_by_id(coin_id, vs_currency='usd', days='30', interval='daily')

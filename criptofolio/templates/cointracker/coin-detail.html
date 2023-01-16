@@ -18,105 +18,105 @@
 </head>
 
 <body>
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-4">
-      <img src="{{ coin.image.large }}" width="128" height="128" />
-    </div>
-    <div class="col-8">
-      <table class="table table-borderless">
-        <tbody>
-          <tr>
-            <th scope="row">Nombre</th>
-            <td>{{ coin.name }}</td>
-          </tr>
-          <tr>
-            <th scope="row">Simbolo</th>
-            <td>{{ coin.symbol }}</td>
-          </tr>
-          <tr>
-            <th scope="row">Precio actual</th>
-            <td>{{ current_price }}</td>
-          </tr>
-          <tr>
-            <th scope="row">Capitalización</th>
-            <td>{{ market_cap }}</td>
-          </tr>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-4">
+        <img src="{{ coin.image.large }}" width="128" height="128" />
+      </div>
+      <div class="col-8">
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <th scope="row">Nombre</th>
+              <td>{{ coin.name }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Simbolo</th>
+              <td>{{ coin.symbol }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Precio actual</th>
+              <td>{{ current_price }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Capitalización</th>
+              <td>{{ market_cap }}</td>
+            </tr>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
 
-      <div class="col-12">
-        <ul>
-          {% for platform_name, address in coin.platforms.items %}
+        <div class="col-12">
+          <ul>
+            {% for platform_name, address in coin.platforms.items %}
             <li>{{ platform_name }}: {{ address }}</li>
-          {% endfor %}
-        </ul>
-      </div>
+            {% endfor %}
+          </ul>
+        </div>
 
-      <div class="col-12">
-        {{ coin.description.en}}
-      </div>
+        <div class="col-12">
+          {{ coin.description.en}}
+        </div>
 
-      <div class="col-12">
-        <p>Homepage: <a href="#"></a> {{ coin.links.homepage.1 }}</p>
+        <div class="col-12">
+          <p>Homepage: <a href="#"></a> {{ coin.links.homepage.1 }}</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="container">
-  <div class="row">
-    <form method="POST" action="{% url 'coin_detail' coin.id %}">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="tokenAmount">Cantidad de tokens:</label>
-        <input type="text" class="form-control" id="tokenAmount" name="token_amount">
+  <div class="container">
+    <div class="row">
+      <form method="POST" action="{% url 'coin_detail' coin.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="tokenAmount">Cantidad de tokens:</label>
+          <input type="text" class="form-control" id="tokenAmount" name="token_amount">
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+      {% if usd_amount %}
+      <div class="form-group mt-3">
+        <label for="usdAmount">Valor en USD:</label>
+        <input type="text" class="form-control" id="usdAmount" value="{{ usd_amount }}" disabled>
       </div>
-      <button type="submit" class="btn btn-primary">Calcular</button>
-    </form>
-    {% if usd_amount %}
-  <div class="form-group mt-3">
-    <label for="usdAmount">Valor en USD:</label>
-    <input type="text" class="form-control" id="usdAmount" value="{{ usd_amount }}" disabled>
-  </div>
-  {% endif %}
-  </div>
-
-  <div class="row">
-    <div class="col-6">
-      <div id="graph-div" style="width: 1000px; height: 500px;">{{ graph_div|safe }}</div>
+      {% endif %}
     </div>
-  </div>
 
-<div class="row">
-  <div class="col-12">
-    <table class="table table-borderless">
-      <tbody>
-        <tr>
-          <th scope="row">Porcentaje de cambio en las ultimas 24h</th>
-          <td>{{ coin.market_data.price_change_percentage_24h }}%</td>
-        </tr>
-        <tr>
-          <th scope="row">Porcentaje de cambio en las ultimas 7d</th>
-          <td>{{ coin.market_data.price_change_percentage_7d }}%</td>
-        </tr>
-        <tr>
-          <th scope="row">Porcentaje de cambio en las ultimos 30d</th>
-          <td>{{ coin.market_data.price_change_percentage_30d }}%</td>
-        </tr>
-        <tr>
-          <th scope="row">Porcentaje de cambio de 1 año</th>
-          <td>{{ coin.market_data.price_change_percentage_1y }}%</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+    <div class="row">
+      <div class="col-6">
+        <div id="graph-div" style="width: 1000px; height: 500px;">{{ graph_div|safe }}</div>
+      </div>
+    </div>
 
-<table class="table">
-  <thead>
-      <tr>
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <th scope="row">Porcentaje de cambio en las ultimas 24h</th>
+              <td>{{ coin.market_data.price_change_percentage_24h }}%</td>
+            </tr>
+            <tr>
+              <th scope="row">Porcentaje de cambio en las ultimas 7d</th>
+              <td>{{ coin.market_data.price_change_percentage_7d }}%</td>
+            </tr>
+            <tr>
+              <th scope="row">Porcentaje de cambio en las ultimos 30d</th>
+              <td>{{ coin.market_data.price_change_percentage_30d }}%</td>
+            </tr>
+            <tr>
+              <th scope="row">Porcentaje de cambio de 1 año</th>
+              <td>{{ coin.market_data.price_change_percentage_1y }}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
           <th>Logo</th>
           <th>Exchange</th>
           <th>Par</th>
@@ -126,11 +126,11 @@
           <th>Trust Score</th>
 
 
-      </tr>
-  </thead>
-  <tbody>
-      {% for ticker in tickers.tickers|slice:":10" %}
-      <tr>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ticker in tickers.tickers|slice:":10" %}
+        <tr>
           <td><img src="{{ ticker.market.logo }}" width="32" height="32" /></td>
           <td>{{ ticker.market.name }}</td>
           <td>{{ ticker.base }}/{{ ticker.target }}</td>
@@ -139,25 +139,25 @@
           <td>{{ ticker.trade_url }}</td>
           <td>
             {% if ticker.trust_score == "green" %}
-                <div class="high" style="background-color: green;">High</div>
+            <div class="high" style="background-color: green;">High</div>
             {% elif ticker.trust_score == "yellow" %}
-                <div class="medium" style="background-color: yellow;">Medium</div>
+            <div class="medium" style="background-color: yellow;">Medium</div>
             {% else %}
-                <div class="low" style="background-color: red;">Low</div>
+            <div class="low" style="background-color: red;">Low</div>
             {% endif %}
-        </td>
+          </td>
 
-      </tr>
-      {% endfor %}
-  </tbody>
-</table>
-
-
-
-  
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
 
-</div>
+
+
+
+
+  </div>
 
 
 
@@ -166,8 +166,3 @@
 </body>
 
 </html>
-
-
-
-
-
