@@ -196,80 +196,29 @@
 
 /* Media Queries */
 
-
-@media (max-width: 767px) {
-  .big-img-circle {
-    display: block;
-    margin: 0 auto;
-  }
-  .text-header {
-    text-align: center;
-    margin-top: 3rem;
-    font-size: 3.5rem;
-  }
-  .text-information {
-    text-align: center;
-    margin-top: 0.5rem;
-    font-size: 2.5rem;
-  }
-  .btn-information {
-    display: block;
-    margin: 0 auto;
-    margin-top: 1rem;
-    width: 30rem;
-  }
-}
-
-
-
-
-/* Media queries */
-
-
-
 /* Header big picture logo and header  */
 
-@media (min-width: 375px) and (max-width: 509px)  {
+@media (min-width: 320px) and (max-width: 768px)  {
   .text-header {
-    text-align: center;
-    margin-top: 3rem;
-    font-size: 2.5rem;
+    font-size: 9.2vw;
   }
   .text-information {
-    text-align: center;
-    margin-top: 0.5rem;
-    font-size: 1.7rem;
+    font-size: 5.2vw;
   }
 
   .btn-information {
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 1rem;
     width: 15rem;
   }
 
 }
 
-@media (min-width: 200px) and (max-width: 375px) {
-  .text-header {
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 10vw;
-  }
-  .text-information {
-    text-align: center;
-    margin-top: 0.5rem;
-    font-size: 8vw;
-  }
-
-  .btn-information {
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 1rem;
-    width: 15rem;
+@media (max-width: 372px)  {
+  .logo-tittle{
+    font-size: 76%;
   }
 
 }
+
 
 @media (min-width: 768px) and (max-width: 1024px)  {
   .text-header{
@@ -279,6 +228,11 @@
   .text-information{
     font-size: 3vw;
   }
+
+  .btn-information {
+    width: 15rem;
+  } 
+
 
 }
 
