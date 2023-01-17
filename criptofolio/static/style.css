@@ -179,9 +179,6 @@
 
 .card-img-container {
   position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -198,7 +195,7 @@
 
 /* Header big picture logo and header  */
 
-@media (min-width: 320px) and (max-width: 768px)  {
+@media (min-width: 100px) and (max-width: 768px)  {
   .text-header {
     font-size: 9.2vw;
   }
@@ -214,9 +211,9 @@
 
 @media (max-width: 372px)  {
   .logo-tittle{
-    font-size: 76%;
+    font-size: 90%;
   }
-
+  
 }
 
 
