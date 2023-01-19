@@ -5,24 +5,44 @@ import requests
 import plotly.graph_objects as go
 
 
-def welcome(request):
-    cg = CoinGeckoAPI()
-    #Exchange Count
-    url = 'https://api.coingecko.com/api/v3/exchanges'
-    response = requests.get(url)
-    total_exchanges = response.headers
-        
-    #CryptoCount
-    crypto_count = cg.get_global()
-
-    #Return
-    context = {'exchange': total_exchanges, 'crypto_count': crypto_count}
-    return render(request, "cointracker/welcome.html", context)
-
-
 # def welcome(request):
+#     cg = CoinGeckoAPI()
+#     #Exchange Count
+#     url = 'https://api.coingecko.com/api/v3/exchanges'
+#     response = requests.get(url)
+#     total_exchanges = response.headers
+        
+#     #CryptoCount
+#     crypto_count = cg.get_global()
 
-#     return render(request, "cointracker/welcome.html")
+#     #Return
+#     context = {'exchange': total_exchanges, 'crypto_count': crypto_count}
+#     return render(request, "cointracker/welcome.html", context)
+
+
+def welcome(request):
+
+    return render(request, "cointracker/welcome.html")
+
+
+
+def coinlist(request):
+    # cg = CoinGeckoAPI()
+    # exchanges = cache.get('exchanges_list')
+    # if exchanges is None:
+    #     # Si los datos no están en cache, obtenerlos de la API
+    #     exchanges = cg.get_exchanges_list()
+    #     # Guardar los datos en cache con una clave 'exchanges_list'
+    #     cache.set('exchanges_list', exchanges, 3600)  # guardar en cache durante 1 hora
+    # # Procesar los datos para mostrar en la vista
+    # for exchange in exchanges:
+    #     exchange_id = exchange['id']
+    #     exchange_data = cg.get_exchanges_by_id(exchange_id)
+    #     exchange['centralized'] = exchange_data['centralized']
+    # context = {'exchanges': exchanges}
+    
+    return render(request, 'cointracker/coin-list.html')
+
 
 
 
@@ -44,21 +64,6 @@ def get_trending_coins():
     return trending_coins
 
 
-def get_exchanges():
-  response = requests.get("https://api.coingecko.com/api/v3/exchanges?per_page=10&page=1")
-
-  if response.status_code == 200:
-    data = response.json()
-    exchanges = []
-
-    for exchange in data:
-      exchanges.append(exchange)
-
-    return exchanges
-  else:
-    return []
-
-
 def get_top_coins_with_ath():
     cg = CoinGeckoAPI()
     coins = cg.get_coins_markets(vs_currency='usd', order='market_cap_desc', per_page=30, page=1, sparkline=False)
@@ -67,9 +72,6 @@ def get_top_coins_with_ath():
         coin['ath'] = '${:,.2f}'.format(coin['ath'])
         coin['ath_change_percentage'] = '{:,.2f}%'.format(coin['ath_change_percentage'])
     return coins
-
-
-
 
 
 
