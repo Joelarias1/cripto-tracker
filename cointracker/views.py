@@ -3,79 +3,76 @@ from django.shortcuts import render
 from pycoingecko import CoinGeckoAPI
 import requests
 import plotly.graph_objects as go
+from django.core.cache import cache
+from django.views.decorators.cache import cache_page
 
 
-# def welcome(request):
-#     cg = CoinGeckoAPI()
-#     #Exchange Count
-#     url = 'https://api.coingecko.com/api/v3/exchanges'
-#     response = requests.get(url)
-#     total_exchanges = response.headers
-        
-#     #CryptoCount
-#     crypto_count = cg.get_global()
 
-#     #Return
-#     context = {'exchange': total_exchanges, 'crypto_count': crypto_count}
-#     return render(request, "cointracker/welcome.html", context)
-
-
+#Home
+@cache_page(300)
 def welcome(request):
+    cg = CoinGeckoAPI()
+    #Exchange Count
+    url = 'https://api.coingecko.com/api/v3/exchanges'
+    response = requests.get(url)
+    total_exchanges = response.headers
+        
+    #CryptoCount
+    crypto_count = cg.get_global()
 
-    return render(request, "cointracker/welcome.html")
+    #Return
+    context = {'exchange': total_exchanges, 'crypto_count': crypto_count}
+    return render(request, "cointracker/welcome.html", context)
 
 
+#Exchanges
 
-def coinlist(request):
-    # cg = CoinGeckoAPI()
-    # exchanges = cache.get('exchanges_list')
-    # if exchanges is None:
-    #     # Si los datos no están en cache, obtenerlos de la API
-    #     exchanges = cg.get_exchanges_list()
-    #     # Guardar los datos en cache con una clave 'exchanges_list'
-    #     cache.set('exchanges_list', exchanges, 3600)  # guardar en cache durante 1 hora
-    # # Procesar los datos para mostrar en la vista
-    # for exchange in exchanges:
-    #     exchange_id = exchange['id']
-    #     exchange_data = cg.get_exchanges_by_id(exchange_id)
-    #     exchange['centralized'] = exchange_data['centralized']
-    # context = {'exchanges': exchanges}
+def exchanges(request):
+    cg = CoinGeckoAPI()
+    exchanges = cache.get('exchanges_list')
     
-    return render(request, 'cointracker/coin-list.html')
+    #Cards
+    trending = get_trending_coins(request)
+    coinath = get_top_coins_with_ath(request)
+    
+    if exchanges is None:
+        exchanges = cg.get_exchanges_list()
+
+    cache.set('exchanges_list', exchanges, 2500) 
+    context = {'exchanges': exchanges, 'trending':trending, 'ath':coinath}
+    return render(request, 'cointracker/exchanges.html', context)
 
 
 
-
-
-def get_top_coins():
+#Card 1 - Trending Coins 24H
+def get_trending_coins(request):
     cg = CoinGeckoAPI()
-    coins = cg.get_coins_markets(vs_currency='usd', order='market_cap_desc', per_page=15, page=1, sparkline=False)
-    for coin in coins:
-        coin['current_price'] = '${:,.2f}'.format(coin['current_price'])
-        coin['market_cap'] = '${:,.0f}'.format(coin['market_cap'])
-        coin['high_24h'] = '${:,.2f}'.format(coin['high_24h'])
-        coin['low_24h'] = '${:,.2f}'.format(coin['low_24h'])
-    return coins
-
-#Cards de HTML
-def get_trending_coins():
-    cg = CoinGeckoAPI()
-    trending_coins = cg.get_search_trending()['coins'][:10]
+    trending_coins = cg.get_search_trending()['coins']
     return trending_coins
 
 
-def get_top_coins_with_ath():
+
+#Card 2 - Top coin ATH
+def get_top_coins_with_ath(request):
     cg = CoinGeckoAPI()
     coins = cg.get_coins_markets(vs_currency='usd', order='market_cap_desc', per_page=30, page=1, sparkline=False)
-    for coin in coins:
-        coin['current_price'] = '${:,.2f}'.format(coin['current_price'])
-        coin['ath'] = '${:,.2f}'.format(coin['ath'])
-        coin['ath_change_percentage'] = '{:,.2f}%'.format(coin['ath_change_percentage'])
     return coins
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 #Funciones Vista Coin-Detail:
+@cache_page(300)
 def coin_detail(request, coin_id):
     cg = CoinGeckoAPI()
     coin_data = cg.get_coin_by_id(coin_id)
@@ -83,24 +80,25 @@ def coin_detail(request, coin_id):
     tickers = get_exchanges_by_coin_id(coin_id)
 
     current_price = float(coin_data['market_data']['current_price']['usd'])
+    market_cap = '${:,.0f}'.format(coin_data['market_data']['market_cap']['usd'])
 
-    if current_price >= 0.001:
+    if current_price >= 0.1:
         current_price = '${:,.2f}'.format(current_price)
     else:
-        current_price = '${:,.10f}'.format(current_price)
+        current_price = coin_data['market_data']['current_price']['usd']
 
-    market_cap = '${:,.0f}'.format(coin_data['market_data']['market_cap']['usd'])
-    
     if request.method == 'POST':
-        # Si el usuario ha enviado una cantidad de tokens, se calcula el valor en USD de la cantidad ingresada
         current_price = current_price.replace('$', '').replace(',', '')
         token_amount = float(request.POST['token_amount'])
         usd_amount = token_amount * float(current_price)
-        usd_amount = '${:,.2f}'.format(usd_amount)
+        
+        if usd_amount >= 0.01:
+            usd_amount = '${:,.2f}'.format(usd_amount)
+        else:
+            usd_amount = '${:,.9f}'.format(usd_amount)
     else:
-        # Si el usuario no ha enviado una cantidad de tokens, se muestra el valor actual
         usd_amount = current_price
-
+        
     return render(request, 'cointracker/coin-detail.html', {'coin': coin_data, 'current_price': current_price, 'market_cap': market_cap, 'usd_amount': usd_amount, 'graph_div': graph_div, 'tickers': tickers})
 
 
@@ -138,7 +136,26 @@ def graph30days(coin_id):
 
 
 
+#Cards de HTML
+def get_top_coins():
+    cg = CoinGeckoAPI()
+    coins = cg.get_coins_markets(vs_currency='usd', order='market_cap_desc', per_page=15, page=1, sparkline=False)
+    for coin in coins:
+        coin['current_price'] = '${:,.2f}'.format(coin['current_price'])
+        coin['market_cap'] = '${:,.0f}'.format(coin['market_cap'])
+        coin['high_24h'] = '${:,.2f}'.format(coin['high_24h'])
+        coin['low_24h'] = '${:,.2f}'.format(coin['low_24h'])
+    return coins
 
+
+def get_top_coins_with_ath(request):
+    cg = CoinGeckoAPI()
+    coins = cg.get_coins_markets(vs_currency='usd', order='market_cap_desc', per_page=30, page=1, sparkline=False)
+    for coin in coins:
+        coin['current_price'] = '${:,.2f}'.format(coin['current_price'])
+        coin['ath'] = '${:,.2f}'.format(coin['ath'])
+        coin['ath_change_percentage'] = '{:,.2f}%'.format(coin['ath_change_percentage'])
+    return coins
 
 
   

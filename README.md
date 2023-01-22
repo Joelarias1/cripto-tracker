@@ -12,7 +12,7 @@ funcionalidades:
 - TBD
 
 Hecho con:
-- Python Django (Utilizando Requests, pycoingecko, Plotly)
+- Python Django (Utilizando Requests, pycoingecko, Plotly, Redis)
 - HTML CSS y Bootstrap 5
 - FontAwesome
 
