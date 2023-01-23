@@ -5,3 +5,14 @@ criptofolio/__pycache__/__init__.cpython-311.pyc
 criptofolio/__pycache__/settings.cpython-311.pyc
 criptofolio/__pycache__/urls.cpython-311.pyc
 criptofolio/__pycache__/wsgi.cpython-311.pyc
+cointracker/__pycache__/__init__.cpython-310.pyc
+cointracker/__pycache__/admin.cpython-310.pyc
+cointracker/__pycache__/apps.cpython-310.pyc
+cointracker/__pycache__/models.cpython-310.pyc
+cointracker/__pycache__/urls.cpython-310.pyc
+cointracker/__pycache__/views.cpython-310.pyc
+cointracker/migrations/__pycache__/__init__.cpython-310.pyc
+criptofolio/__pycache__/__init__.cpython-310.pyc
+criptofolio/__pycache__/settings.cpython-310.pyc
+criptofolio/__pycache__/urls.cpython-310.pyc
+criptofolio/__pycache__/wsgi.cpython-310.pyc
