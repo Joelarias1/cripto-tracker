@@ -21,13 +21,25 @@ PyCoingecko y mostrar la distinta información que ofrece esta API
 
 **Server:** Django, Redis
 
+**Other:** Plotly
+
 **API:** https://www.coingecko.com/es/api
 
 
 ## Design
 
 **Index - First Image**
-![Indexv1](https://user-images.githubusercontent.com/66278716/212708516-08bd6e40-114d-4b6f-9c99-484f4a1e50de.png)
+![Indexv2](https://user-images.githubusercontent.com/66278716/214750788-b49edb23-49e9-43b7-9945-e30993b94764.png)
+
+**Index - Cards**
+![image](https://user-images.githubusercontent.com/66278716/214750956-34d3687d-5ddd-425b-96f9-a6e4c1cad30f.png)
+
+**Index - About Project**
+![image](https://user-images.githubusercontent.com/66278716/214751052-997eb369-bb42-41d5-a85b-6bdf17862831.png)
+
+**Exchanges View - Cards and Exchange List**
+(![Exchangesv1](https://user-images.githubusercontent.com/66278716/214750519-fb1f6271-c4f3-4d6a-8444-d21370fefcb3.png)
+
 
 
 
